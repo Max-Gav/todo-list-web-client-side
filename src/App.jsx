@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { createContext, useContext } from "react";
+import TodoPage from "./pages/Todo List Page/TodoPage";
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  return <TodoPage />
+};
 
-export default App
+export default App;
