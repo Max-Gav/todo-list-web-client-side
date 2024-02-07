@@ -1,55 +1,60 @@
-export const validateUserName = (username, setErrorField, setErrorText) => {
+export const validateUserName = (username) => {
   if (username.length < 3) {
-    setErrorText("User name must be at least 3 characters");
-    setErrorField("username");
+    return {errorField: "username", errorText: "User name must be at least 3 characters"}
   } else if (username.length > 20) {
-    setErrorText("User name must be at most 20 characters");
-    setErrorField("username");
+    return {errorField: "username", errorText: "User name must be at most 20 characters"}
   } else {
-    setErrorText(null);
-    setErrorField(null);
-    return true;
+    return {errorField: null, errorText: null}
   }
-  return false;
 };
 
-export const validateEmail = (email, setErrorField, setErrorText) => {
+export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!emailRegex.test(email)) {
-    setErrorText("Enter a valid email address");
-    setErrorField("email");
+    return {errorField: "email", errorText: "Enter a valid email address"}
   } else {
-    setErrorText(null);
-    setErrorField(null);
-    return true;
+    return {errorField: null, errorText: null}
   }
-  return false;
 };
 
-export const validateSignUpPassword = (password, setErrorField, setErrorText) => {
+export const validateSignUpPassword = (
+  password,
+) => {
   if (password.length < 8) {
-    setErrorText("Password must be at least 8 characters");
-    setErrorField("password");
+    return {errorField: "password", errorText: "Password must be at least 8 characters"}
   } else if (password.length > 20) {
-    setErrorText("Password must be at most 20 characters");
-    setErrorField("password");
+    return {errorField: "password", errorText: "Password must be at most 20 characters"}
   } else {
-    setErrorText(null);
-    setErrorField(null);
-    return true;
+    return {errorField: null, errorText: null}
   }
-  return false;
 };
 
-export const validateLoginPassword = (password, setErrorField, setErrorText) => {
+export const validateLoginPassword = (
+  password,
+) => {
   if (password.length <= 0) {
-    setErrorText("Enter a password");
-    setErrorField("password");
+    return {errorField: "password", errorText: "Enter a password"}
   } else {
-    setErrorText(null);
-    setErrorField(null);
-    return true;
+    return {errorField: null, errorText: null}
   }
-  return false;
 };
+
+export const validateTaskMessage = (message) => {
+  if (message.length <= 0) {
+    return {errorField: "message", errorText: "Task message should not be empty"}
+  } else if (message.length > 50) {
+    return {errorField: "message", errorText: "Task message must be at most 50 characters"}
+  } else {
+    return {errorField: null, errorText: null}
+  }
+};
+
+
+// Sets the error field and error text states and returns true if a error occurred
+export const setErrorDetails = (errorDetails,setErrorField, setErrorText)=>{
+  setErrorField(errorDetails.errorField)
+  setErrorText(errorDetails.errorText)
+
+  return errorDetails.errorField != null
+}

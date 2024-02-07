@@ -1,35 +1,21 @@
-import React from "react";
+import { Box, Container } from "@mui/material";
+import React, { useContext } from "react";
+import { UserStateContext } from "../../AppContext";
 import NavigationBar from "../../components/Navigation Bar/NavigationBar";
-import { Grid, TextField, Container, Paper, Box } from "@mui/material";
-import AccessDialog from "./Todo Page Components/AccessDialog";
+import OverlayHandler from "../../components/Overlays/OverlayHandler";
+import TaskTable from "../../components/Task Table/TaskTable";
 
 const TodoPage = () => {
-
+  const { userState } = useContext(UserStateContext);
   return (
     <Box>
-      <NavigationBar
-      />
-      <AccessDialog />
-      <Container maxWidth="xl">
-        <Grid
-          container
-          sx={{
-            justifyContent: "center",
-            display: "flex",
-          }}
-        >
-          <Grid item xs={9} md={6}>
-            <TextField
-              fullWidth
-              label="Enter Task"
-              variant="outlined"
-              margin="normal"
-              component={Paper}
-            />
-          </Grid>
-        </Grid>
-
-      </Container>
+      <NavigationBar />
+      <OverlayHandler />
+      {userState != "none" && (
+        <Container maxWidth="lg">
+          <TaskTable />
+        </Container>
+      )}
     </Box>
   );
 };

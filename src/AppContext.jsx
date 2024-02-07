@@ -1,38 +1,53 @@
 import React, { createContext } from "react";
-import useConnected from "./hooks/useConnected";
 import App from "./App";
-import useDialog from "./hooks/useDialog";
+import useOverlay from "./hooks/useOverlay";
+import useTasks from "./hooks/useTasks";
+import useUserState from "./hooks/useUserState";
 
-export const IsConnectedContext = createContext(null);
-export const DialogContext = createContext(null);
+export const TasksContext = createContext(null);
+export const UserStateContext = createContext(null);
+export const OverlayContext = createContext(null);
 
 const AppContext = () => {
-  // Is Logged In
-  const { isConnected, connectUser, disconnectUser  } = useConnected();
+  // User State
+  const { userState, connectUser, disconnectUser } = useUserState();
 
-  // Dialog
+  // Overlay
+  const { isOpen, props,currentOverlay, openOverlay, handleClose } = useOverlay();
+
+  // Tasks
   const {
-    isOpen,
-    currentDialog,
-    openSignUpDialog,
-    openLoginDialog,
-    handleClose,
-  } = useDialog();
+    tableTasks,
+    tasksLeft,
+    onTaskUpdate,
+    onClearCompleted,
+    onAddTask,
+    onFilterTasks,
+    onDeleteTask,
+  } = useTasks(userState, disconnectUser);
 
   return (
-    <IsConnectedContext.Provider value={{ isConnected, connectUser, disconnectUser }}>
-      <DialogContext.Provider
-        value={{
-          isOpen,
-          currentDialog,
-          openSignUpDialog,
-          openLoginDialog,
-          handleClose,
+    <UserStateContext.Provider
+      value={{ userState, connectUser, disconnectUser }}
+    >
+      <TasksContext.Provider
+        value={userState == "none" ? null : {
+          tableTasks,
+          tasksLeft,
+          onTaskUpdate,
+          onClearCompleted,
+          onAddTask,
+          onFilterTasks,
+          onDeleteTask,
         }}
       >
-        <App />
-      </DialogContext.Provider>
-    </IsConnectedContext.Provider>
+        <OverlayContext.Provider
+          value={{ isOpen, props, currentOverlay, openOverlay, handleClose }}
+        >
+          <App />
+        </OverlayContext.Provider>
+      </TasksContext.Provider>
+    </UserStateContext.Provider>
   );
 };
 

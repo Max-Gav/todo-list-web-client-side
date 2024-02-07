@@ -1,23 +1,23 @@
 import {
+  Box,
   Button,
   DialogActions,
   DialogContent,
   DialogTitle,
   Link,
   TextField,
-  Box,
 } from "@mui/material";
 import React, { useContext } from "react";
-import useSignUp from "../../hooks/useSignUp";
-import { DialogContext, IsConnectedContext } from "../../AppContext";
+import { OverlayContext, UserStateContext } from "../../../AppContext";
+import useSignUp from "../../../hooks/useSignUp";
 
 const SignUpDialog = () => {
   const {
-    openLoginDialog,
+    openDialog,
     handleClose,
-  } = useContext(DialogContext);
+  } = useContext(OverlayContext);
 
-  const {connectUser} = useContext(IsConnectedContext)
+  const {connectUser} = useContext(UserStateContext)
 
   const {
     setUserName,
@@ -34,6 +34,7 @@ const SignUpDialog = () => {
       <DialogContent>
         <TextField
           error={errorField == "username"}
+          helperText={errorField == "username" && errorText}
           required
           margin="dense"
           name="username"
@@ -44,11 +45,10 @@ const SignUpDialog = () => {
           onChange={(event) => {
             setUserName(event.target.value);
           }}
-          helperText={errorField == "username" && errorText}
         />
         <TextField
           error={errorField == "email"}
-          autoFocus
+          helperText={errorField == "email" && errorText}
           required
           margin="dense"
           name="email"
@@ -59,10 +59,10 @@ const SignUpDialog = () => {
           onChange={(event) => {
             setEmail(event.target.value);
           }}
-          helperText={errorField == "email" && errorText}
         />
         <TextField
           error={errorField == "password"}
+          helperText={errorField == "password" && errorText}
           required
           margin="dense"
           name="password"
@@ -73,10 +73,9 @@ const SignUpDialog = () => {
           onChange={(event) => {
             setPassword(event.target.value);
           }}
-          helperText={errorField == "password" && errorText}
         />
         <Box mt={"10px"}>
-          <Link color="primary" onClick={openLoginDialog}>
+          <Link color="primary" onClick={()=>{openDialog("login")}}>
             Login to existing user
           </Link>
         </Box>

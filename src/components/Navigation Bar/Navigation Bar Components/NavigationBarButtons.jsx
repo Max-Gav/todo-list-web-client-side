@@ -3,12 +3,12 @@ import React, { useContext, useEffect } from "react";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { DialogContext, IsConnectedContext } from "../../../AppContext";
+import { OverlayContext, UserStateContext } from "../../../AppContext";
 
 const NavigationBarButtons = () => {
-  const { isConnected, disconnectUser } = useContext(IsConnectedContext);
+  const { userState, disconnectUser } = useContext(UserStateContext);
 
-  const { openLoginDialog, openSignUpDialog } = useContext(DialogContext);
+  const { openOverlay } = useContext(OverlayContext);
 
   return (
     <Grid
@@ -22,10 +22,11 @@ const NavigationBarButtons = () => {
         gap: 2,
       }}
     >
-      {isConnected ? (
+      {userState != "none" ? (
         <>
           <Button
             variant="contained"
+            color="error"
             sx={{backgroundColor:"gray"}}
             startIcon={<LogoutIcon />}
             onClick={disconnectUser}
@@ -39,7 +40,7 @@ const NavigationBarButtons = () => {
             variant="contained"
             color="success"
             startIcon={<PersonAddIcon />}
-            onClick={openSignUpDialog}
+            onClick={()=>{openOverlay("signup")}}
           >
             Sign up
           </Button>
@@ -47,7 +48,7 @@ const NavigationBarButtons = () => {
             variant="contained"
             color="success"
             startIcon={<LoginIcon />}
-            onClick={openLoginDialog}
+            onClick={()=>{openOverlay("login")}}
           >
             Login
           </Button>

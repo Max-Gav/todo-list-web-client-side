@@ -8,16 +8,16 @@ import {
   Box,
 } from "@mui/material";
 import React, { useContext } from "react";
-import useLogin from "../../hooks/useLogin";
-import { DialogContext, IsConnectedContext } from "../../AppContext";
+import useLogin from "../../../hooks/useLogin";
+import { OverlayContext, UserStateContext } from "../../../AppContext";
 
-const LoginDialog = ({onClose, onChangeDialog }) => {
+const LoginDialog = () => {
   const {
-    openSignUpDialog,
+    openDialog,
     handleClose,
-  } = useContext(DialogContext);
+  } = useContext(OverlayContext);
 
-  const {connectUser} = useContext(IsConnectedContext)
+  const {connectUser} = useContext(UserStateContext)
 
   const { setEmail, setPassword, errorField, errorText, onLogin } = useLogin(handleClose, connectUser);
 
@@ -29,7 +29,7 @@ const LoginDialog = ({onClose, onChangeDialog }) => {
       <DialogContent>
         <TextField
           error={errorField == "email"}
-          autoFocus
+          helperText={errorField == "email" && errorText}
           required
           margin="dense"
           name="email"
@@ -40,10 +40,10 @@ const LoginDialog = ({onClose, onChangeDialog }) => {
           onChange={(event) => {
             setEmail(event.target.value);
           }}
-          helperText={errorField == "email" && errorText}
         />
         <TextField
           error={errorField == "password"}
+          helperText={errorField == "password" && errorText}
           required
           margin="dense"
           name="password"
@@ -54,10 +54,9 @@ const LoginDialog = ({onClose, onChangeDialog }) => {
           onChange={(event) => {
             setPassword(event.target.value);
           }}
-          helperText={errorField == "password" && errorText}
         />
         <Box mt={"10px"}>
-          <Link color="primary" onClick={openSignUpDialog}>
+          <Link color="primary" onClick={()=>{openDialog("signup")}}>
             Create an account
           </Link>
         </Box>
