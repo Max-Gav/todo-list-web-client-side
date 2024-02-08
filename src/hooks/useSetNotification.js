@@ -13,13 +13,9 @@ const useSetNotification = (openOverlay, handleClose) => {
 
     worker.current.addEventListener("message", async (event) => {
       const taskId = event.data.taskId;
-      const result = await apiRequest(
-        "post",
-        "/tasks/notification-eligible",
-        {
-          taskId,
-        }
-      );
+      const result = await apiRequest("post", "/tasks/notification-eligible", {
+        taskId,
+      });
       if (result.answer) {
         openOverlay("notification", {
           taskId,
@@ -32,7 +28,7 @@ const useSetNotification = (openOverlay, handleClose) => {
   const createNotification = (props) => {
     if (notificationTime > 0) {
       setInputError(null);
-      worker.current.postMessage({ ...props, notificationTime:1000 });
+      worker.current.postMessage({ ...props, notificationTime});
       handleClose();
     } else {
       setInputError("Enter a time in the future!");
