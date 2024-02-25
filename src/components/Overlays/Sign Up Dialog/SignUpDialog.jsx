@@ -13,7 +13,7 @@ import useSignUp from "../../../hooks/useSignUp";
 
 const SignUpDialog = () => {
   const {
-    openDialog,
+    openOverlay,
     handleClose,
   } = useContext(OverlayContext);
 
@@ -75,7 +75,7 @@ const SignUpDialog = () => {
           }}
         />
         <Box mt={"10px"}>
-          <Link color="primary" onClick={()=>{openDialog("login")}}>
+          <Link color="primary" onClick={()=>{openOverlay("login")}}>
             Login to existing user
           </Link>
         </Box>

@@ -19,7 +19,7 @@ const useSetNotification = (openOverlay, handleClose) => {
       if (result.answer) {
         openOverlay("notification", {
           taskId,
-          message: event.data.message,
+          message: result.message,
         });
       }
     });

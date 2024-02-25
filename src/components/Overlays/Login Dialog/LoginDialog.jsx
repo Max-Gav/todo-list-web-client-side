@@ -13,7 +13,7 @@ import { OverlayContext, UserStateContext } from "../../../AppContext";
 
 const LoginDialog = () => {
   const {
-    openDialog,
+    openOverlay,
     handleClose,
   } = useContext(OverlayContext);
 
@@ -56,7 +56,7 @@ const LoginDialog = () => {
           }}
         />
         <Box mt={"10px"}>
-          <Link color="primary" onClick={()=>{openDialog("signup")}}>
+          <Link color="primary" onClick={()=>{openOverlay("signup")}}>
             Create an account
           </Link>
         </Box>

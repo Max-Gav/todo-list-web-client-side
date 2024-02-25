@@ -6,13 +6,13 @@ import {
   DialogTitle,
   Typography,
 } from "@mui/material";
-import { TimePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
 import React, { useContext } from "react";
 import { OverlayContext } from "../../../AppContext";
 import useSetNotification from "../../../hooks/useSetNotification";
-import dayjs from "dayjs";
 
 const SetNotificationDialog = () => {
   const { openOverlay, handleClose, props } = useContext(OverlayContext);
@@ -41,7 +41,7 @@ const SetNotificationDialog = () => {
           Task: {props.message}
         </Typography>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <TimePicker
+          <DateTimePicker
             label="Notification Time"
             defaultValue={dayjs()}
             slotProps={{
