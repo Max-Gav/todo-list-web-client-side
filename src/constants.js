@@ -1,4 +1,4 @@
-export const SERVER_URL = 'https://127.0.0.1:8000'
+export const SERVER_URL = 'https://192.168.9.80:8000'
 
 export const STATUS_NOT_STARTED = "Not Started"
 
